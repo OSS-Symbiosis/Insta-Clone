@@ -1,0 +1,46 @@
+import 'package:bloc/bloc.dart';
+import 'package:equatable/equatable.dart';
+import 'package:flutter/material.dart';
+import 'package:instagram_app/models/models.dart';
+import 'package:instagram_app/repositories/repositories.dart';
+
+part 'signup_state.dart';
+
+class SignupCubit extends Cubit<SignupState> {
+  final AuthRepository _authRepository;
+  SignupCubit({@required AuthRepository authRepository})
+      : _authRepository = authRepository,
+        super(SignupState.initial());
+
+  void usernameChanged(String value) {
+    emit(
+      state.copyWith(username: value, status: SignupStatus.initial),
+    );
+  }
+
+  void emailChanged(String value) {
+    emit(
+      state.copyWith(email: value, status: SignupStatus.initial),
+    );
+  }
+
+  void passwordChanged(String value) {
+    emit(
+      state.copyWith(password: value, status: SignupStatus.initial),
+    );
+  }
+
+  void signupWithCredential() async {
+    if (!state.isFormValid || state.status == SignupStatus.submitting) return;
+    emit(state.copyWith(status: SignupStatus.submitting));
+    try {
+      _authRepository.signUpWithEmailAndPassword(
+          email: state.email,
+          password: state.password,
+          username: state.username);
+      emit(state.copyWith(status: SignupStatus.success));
+    } on Failure catch (err) {
+      emit(state.copyWith(failure: err, status: SignupStatus.error));
+    }
+  }
+}

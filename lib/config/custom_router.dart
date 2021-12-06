@@ -16,6 +16,8 @@ class CustomRouter {
         return LoginScreen.route();
       case NavScreen.routename:
         return NavScreen.route();
+      case SignupScreen.routename:
+        return SignupScreen.route();
       default:
         return _errorRoute();
     }
