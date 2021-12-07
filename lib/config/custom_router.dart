@@ -3,7 +3,6 @@ import 'package:instagram_app/screens/screens.dart';
 
 class CustomRouter {
   static Route onGenerateRoute(RouteSettings settings) {
-    print(settings.name);
     switch (settings.name) {
       case '/':
         return MaterialPageRoute(
@@ -18,6 +17,14 @@ class CustomRouter {
         return NavScreen.route();
       case SignupScreen.routename:
         return SignupScreen.route();
+      default:
+        return _errorRoute();
+    }
+  }
+
+  static Route onGenerateNestedRoute(RouteSettings settings) {
+    print('Nested Route ${settings.name}');
+    switch (settings.name) {
       default:
         return _errorRoute();
     }
