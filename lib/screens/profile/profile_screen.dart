@@ -3,7 +3,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:instagram_app/blocs/blocs.dart';
 import 'package:instagram_app/screens/profile/widgets/widgets.dart';
 import 'package:instagram_app/widgets/widgets.dart';
-
 import 'bloc/profile_bloc.dart';
 
 class ProfileScreen extends StatelessWidget {
@@ -63,7 +62,7 @@ class ProfileScreen extends StatelessWidget {
                             ),
                           ),
                           Padding(
-                            padding: EdgeInsets.symmetric(
+                            padding: const EdgeInsets.symmetric(
                                 horizontal: 30, vertical: 10.0),
                             child: ProfileInfo(
                               username: state.user.username,
