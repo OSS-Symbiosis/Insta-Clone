@@ -1,9 +1,7 @@
 import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_cropper/image_cropper.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:instagram_app/helpers/helpers.dart';
 import 'package:instagram_app/models/models.dart';
 import 'package:instagram_app/repositories/repositories.dart';

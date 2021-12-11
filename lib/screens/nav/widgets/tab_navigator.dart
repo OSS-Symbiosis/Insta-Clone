@@ -4,6 +4,7 @@ import 'package:instagram_app/blocs/auth/auth_bloc.dart';
 import 'package:instagram_app/config/custom_router.dart';
 import 'package:instagram_app/enums/bottom_nav_item.dart';
 import 'package:instagram_app/repositories/repositories.dart';
+import 'package:instagram_app/screens/create_post/cubit/create_post_cubit.dart';
 import 'package:instagram_app/screens/profile/bloc/profile_bloc.dart';
 import 'package:instagram_app/screens/screens.dart';
 
@@ -43,13 +44,20 @@ class TabNavigator extends StatelessWidget {
   Widget _getScreen(BuildContext context, BottomNavItem item) {
     switch (item) {
       case BottomNavItem.feed:
-        return FeedScreen();
+        return const FeedScreen();
       case BottomNavItem.search:
-        return SearchScreen();
+        return const SearchScreen();
       case BottomNavItem.create:
-        return CreatePostScreen();
+        return BlocProvider<CreatePostCubit>(
+          create: (context) => CreatePostCubit(
+            postRepository: context.read<PostRepository>(),
+            storageRepository: context.read<StorageRepository>(),
+            authBloc: context.read<AuthBloc>(),
+          ),
+          child: CreatePostScreen(),
+        );
       case BottomNavItem.notifications:
-        return NotificationScreen();
+        return const NotificationScreen();
       case BottomNavItem.profile:
         return BlocProvider<ProfileBloc>(
           create: (_) => ProfileBloc(
@@ -60,7 +68,7 @@ class TabNavigator extends StatelessWidget {
           child: const ProfileScreen(),
         );
       default:
-        return Scaffold();
+        return const Scaffold();
     }
   }
 }
