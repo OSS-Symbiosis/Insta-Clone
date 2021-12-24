@@ -27,8 +27,8 @@ class ProfileStats extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               _Stats(count: posts, label: 'posts'),
-              _Stats(count: posts, label: 'followers'),
-              _Stats(count: posts, label: 'following'),
+              _Stats(count: followers, label: 'followers'),
+              _Stats(count: following, label: 'following'),
             ],
           ),
           const SizedBox(
