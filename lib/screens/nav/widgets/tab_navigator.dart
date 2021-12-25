@@ -2,9 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:instagram_app/blocs/auth/auth_bloc.dart';
 import 'package:instagram_app/config/custom_router.dart';
+import 'package:instagram_app/cubits/cubits.dart';
 import 'package:instagram_app/enums/bottom_nav_item.dart';
 import 'package:instagram_app/repositories/repositories.dart';
 import 'package:instagram_app/screens/create_post/cubit/create_post_cubit.dart';
+import 'package:instagram_app/screens/feed/bloc/feed_bloc.dart';
 import 'package:instagram_app/screens/profile/bloc/profile_bloc.dart';
 import 'package:instagram_app/screens/screens.dart';
 import 'package:instagram_app/screens/search/cubit/search_cubit.dart';
@@ -45,7 +47,14 @@ class TabNavigator extends StatelessWidget {
   Widget _getScreen(BuildContext context, BottomNavItem item) {
     switch (item) {
       case BottomNavItem.feed:
-        return const FeedScreen();
+        return BlocProvider<FeedBloc>(
+          create: (context) => FeedBloc(
+            postRepository: context.read<PostRepository>(),
+            authBloc: context.read<AuthBloc>(),
+            likedPostsCubit: context.read<LikedPostsCubit>(),
+          )..add(FeedFetchPosts()),
+          child: const FeedScreen(),
+        );
       case BottomNavItem.search:
         return BlocProvider<SearchCubit>(
           create: (context) =>
@@ -69,6 +78,7 @@ class TabNavigator extends StatelessWidget {
             userRepository: context.read<UserRepository>(),
             postRepository: context.read<PostRepository>(),
             authBloc: context.read<AuthBloc>(),
+            likedPostsCubit: context.read<LikedPostsCubit>(),
           )..add(
               ProfileLoadUser(userId: context.read<AuthBloc>().state.user.uid)),
           child: const ProfileScreen(),
