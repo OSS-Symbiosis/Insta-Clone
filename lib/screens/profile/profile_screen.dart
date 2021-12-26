@@ -4,6 +4,7 @@ import 'package:instagram_app/blocs/blocs.dart';
 import 'package:instagram_app/cubits/cubits.dart';
 import 'package:instagram_app/repositories/repositories.dart';
 import 'package:instagram_app/screens/profile/widgets/widgets.dart';
+import 'package:instagram_app/screens/screens.dart';
 import 'package:instagram_app/widgets/widgets.dart';
 import 'bloc/profile_bloc.dart';
 
@@ -161,11 +162,15 @@ class _ProfileScreenState extends State<ProfileScreen>
                       delegate: SliverChildBuilderDelegate((context, index) {
                         final post = state.posts[index];
                         return GestureDetector(
-                            onTap: () {},
-                            child: Image(
-                              image: NetworkImage(post.imageUrl),
-                              fit: BoxFit.cover,
-                            ));
+                          onTap: () => Navigator.of(context).pushNamed(
+                            CommentsScreen.routeName,
+                            arguments: CommentsScreenArgs(post: post),
+                          ),
+                          child: Image(
+                            image: NetworkImage(post.imageUrl),
+                            fit: BoxFit.cover,
+                          ),
+                        );
                       }, childCount: state.posts.length),
                       gridDelegate:
                           const SliverGridDelegateWithFixedCrossAxisCount(
@@ -175,31 +180,36 @@ class _ProfileScreenState extends State<ProfileScreen>
                       ),
                     )
                   : SliverList(
-                      delegate: SliverChildBuilderDelegate((context, index) {
-                      final post = state.posts[index];
-                      final likedPostsState =
-                          context.watch<LikedPostsCubit>().state;
-                      final isLiked =
-                          likedPostsState.likedPostIds.contains(post.id);
-                      final recentlyLiked = likedPostsState.recentlyLikedPostIds
-                          .contains(post.id);
-                      return PostView(
-                        post: post,
-                        isLiked: isLiked,
-                        recentlyLiked: recentlyLiked,
-                        onLike: () {
-                          if (isLiked) {
-                            context
-                                .read<LikedPostsCubit>()
-                                .unlikedPost(post: post);
-                          } else {
-                            context
-                                .read<LikedPostsCubit>()
-                                .likedPost(post: post);
-                          }
+                      delegate: SliverChildBuilderDelegate(
+                        (context, index) {
+                          final post = state.posts[index];
+                          final likedPostsState =
+                              context.watch<LikedPostsCubit>().state;
+                          final isLiked =
+                              likedPostsState.likedPostIds.contains(post.id);
+                          final recentlyLiked = likedPostsState
+                              .recentlyLikedPostIds
+                              .contains(post.id);
+                          return PostView(
+                            post: post,
+                            isLiked: isLiked,
+                            recentlyLiked: recentlyLiked,
+                            onLike: () {
+                              if (isLiked) {
+                                context
+                                    .read<LikedPostsCubit>()
+                                    .unlikedPost(post: post);
+                              } else {
+                                context
+                                    .read<LikedPostsCubit>()
+                                    .likedPost(post: post);
+                              }
+                            },
+                          );
                         },
-                      );
-                    }, childCount: state.posts.length)),
+                        childCount: state.posts.length,
+                      ),
+                    ),
             ],
           ),
         );

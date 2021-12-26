@@ -1,8 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:equatable/equatable.dart';
-import 'package:flutter/material.dart';
 import 'package:instagram_app/config/paths.dart';
-import 'package:instagram_app/models/models.dart';
+import 'package:instagram_app/repositories/user_model.dart';
+import 'package:meta/meta.dart';
 
 class Comment extends Equatable {
   final String id;
@@ -28,7 +28,7 @@ class Comment extends Equatable {
         date,
       ];
 
-  Comment copywith({
+  Comment copyWith({
     String id,
     String postId,
     User author,
@@ -47,10 +47,8 @@ class Comment extends Equatable {
   Map<String, dynamic> toDocument() {
     return {
       'postId': postId,
-      'author': FirebaseFirestore.instance
-          .collection(Paths.users)
-          .doc(author.id)
-          .get(),
+      'author':
+          FirebaseFirestore.instance.collection(Paths.users).doc(author.id),
       'content': content,
       'date': Timestamp.fromDate(date),
     };

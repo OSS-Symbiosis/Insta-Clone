@@ -4,6 +4,7 @@ import 'package:instagram_app/extensions/date_time_extension.dart';
 
 import 'package:instagram_app/models/models.dart';
 import 'package:instagram_app/screens/profile/profile_screen.dart';
+import 'package:instagram_app/screens/screens.dart';
 import 'package:instagram_app/widgets/widgets.dart';
 
 class PostView extends StatelessWidget {
@@ -72,7 +73,10 @@ class PostView extends StatelessWidget {
                     ),
             ),
             IconButton(
-              onPressed: () {},
+              onPressed: () => Navigator.of(context).pushNamed(
+                CommentsScreen.routeName,
+                arguments: CommentsScreenArgs(post: post),
+              ),
               icon: const Icon(Icons.comment_outlined),
             ),
           ],

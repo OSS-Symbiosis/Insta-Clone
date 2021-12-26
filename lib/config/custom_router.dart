@@ -28,6 +28,8 @@ class CustomRouter {
         return ProfileScreen.route(args: settings.arguments);
       case EditProfileScreen.routename:
         return EditProfileScreen.route(args: settings.arguments);
+      case CommentsScreen.routeName:
+        return CommentsScreen.route(args: settings.arguments);
       default:
         return _errorRoute();
     }
