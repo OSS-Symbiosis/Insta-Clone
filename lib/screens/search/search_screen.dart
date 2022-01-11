@@ -80,7 +80,7 @@ class _SearchScreenState extends State<SearchScreen> {
                             );
                           },
                           itemCount: state.users.length)
-                      : CenteredText(text: 'No users found');
+                      : const CenteredText(text: 'No users found');
                 default:
                   return const SizedBox.shrink();
               }
