@@ -10,6 +10,7 @@ import 'package:instagram_app/cubits/cubits.dart';
 import 'package:instagram_app/repositories/repositories.dart';
 import 'package:instagram_app/screens/screens.dart';
 import 'blocs/auth/auth_bloc.dart';
+import 'repositories/notifications/notifications_repository.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -38,6 +39,9 @@ class MyApp extends StatelessWidget {
         ),
         RepositoryProvider<PostRepository>(
           create: (_) => PostRepository(),
+        ),
+        RepositoryProvider<NotificationRepository>(
+          create: (_) => NotificationRepository(),
         ),
       ],
       child: MultiBlocProvider(

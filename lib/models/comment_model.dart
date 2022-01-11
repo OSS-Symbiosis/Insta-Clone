@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:equatable/equatable.dart';
 import 'package:instagram_app/config/paths.dart';
-import 'package:instagram_app/repositories/user_model.dart';
+import 'package:instagram_app/models/user_model.dart';
 import 'package:meta/meta.dart';
 
 class Comment extends Equatable {

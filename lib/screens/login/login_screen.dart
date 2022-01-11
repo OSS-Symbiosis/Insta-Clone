@@ -95,8 +95,7 @@ class LoginScreen extends StatelessWidget {
                           const SizedBox(
                             height: 28.0,
                           ),
-                          RaisedButton(
-                            elevation: 1.0,
+                          FlatButton(
                             color: Theme.of(context).primaryColor,
                             textColor: Colors.white,
                             onPressed: () => _submitForm(context,

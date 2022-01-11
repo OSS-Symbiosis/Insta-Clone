@@ -1,7 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/material.dart';
 import 'package:instagram_app/config/paths.dart';
-import 'package:instagram_app/models/post_model.dart';
-import 'package:instagram_app/models/comment_model.dart';
+import 'package:instagram_app/enums/enums.dart';
+import 'package:instagram_app/models/models.dart';
 import 'package:instagram_app/repositories/repositories.dart';
 import 'package:meta/meta.dart';
 
@@ -23,6 +24,19 @@ class PostRepository extends BasePostRepository {
         .doc(comment.postId)
         .collection(Paths.postComments)
         .add(comment.toDocument());
+
+    final notifications = Notif(
+      type: NotifType.comment,
+      fromUser: comment.author,
+      post: post,
+      date: DateTime.now(),
+    );
+
+    _firebaseFirestore
+        .collection(Paths.notifications)
+        .doc(post.author.id)
+        .collection(Paths.userNotifications)
+        .add(notifications.toDocument());
   }
 
   @override
@@ -100,6 +114,18 @@ class PostRepository extends BasePostRepository {
         .collection(Paths.postLikes)
         .doc(userId)
         .set({});
+    final notifications = Notif(
+      type: NotifType.like,
+      fromUser: User.empty.copyWith(id: userId),
+      post: post,
+      date: DateTime.now(),
+    );
+
+    _firebaseFirestore
+        .collection(Paths.notifications)
+        .doc(post.author.id)
+        .collection(Paths.userNotifications)
+        .add(notifications.toDocument());
   }
 
   @override
